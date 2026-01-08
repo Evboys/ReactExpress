@@ -1,9 +1,11 @@
 import { useUsers } from "../hooks/useUsers";
+import { Loader } from "../components/ui/Loader"
+import React from "react";
 
 export default function HomePage() {
     const { users, loading, error } = useUsers();
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loader/>;
     if (error) return <p>Error: {error}</p>;
 
     return (
