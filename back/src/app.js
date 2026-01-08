@@ -1,7 +1,8 @@
+const authRoutes = require("./routes/auth.routes");
+
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
-const userRoutes = require("./routes/user.routes");
 
 const app = express();
 connectDB();
@@ -9,9 +10,11 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/users", userRoutes);
+app.use("/api", authRoutes);
+app.use("/api/games", gamesRoutes);
+app.use("/api/consoles", consolesRoutes);
+app.use("/api/favorites", favoritesRoutes);
 
-// Route test
 app.get("/", (req, res) => {
     res.send("API en Marche");
 });

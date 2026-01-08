@@ -1,6 +1,5 @@
 import { useUsers } from "../hooks/useUsers";
-import { Loader } from "../components/ui/Loader"
-import React from "react";
+import  Loader  from "../components/ui/Loader"
 
 export default function HomePage() {
     const { users, loading, error } = useUsers();

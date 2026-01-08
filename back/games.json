@@ -1,0 +1,89 @@
+[
+    {
+        "title": "Hollow Knight",
+        "description": "Un metroidvania sombre et exigeant.",
+        "genres": [ "Action", "Indé" ],
+        "consoles": [
+            { "$oid": "650000000000000000000001" },
+            { "$oid": "650000000000000000000002" },
+            { "$oid": "650000000000000000000003" },
+            { "$oid": "650000000000000000000004" },
+            { "$oid": "650000000000000000000005" },
+            { "$oid": "650000000000000000000007" }
+        ],
+        "createdBy": { "$oid": "650000000000000000000999" },
+        "visibility": "public"
+    },
+    {
+        "title": "The Witcher 3",
+        "description": "Un RPG open world riche et immersif.",
+        "genres": [ "RPG", "Action" ],
+        "consoles": [
+            { "$oid": "650000000000000000000002" },
+            { "$oid": "650000000000000000000001" },
+            { "$oid": "650000000000000000000003" },
+            { "$oid": "650000000000000000000004" },
+            { "$oid": "650000000000000000000005" },
+            { "$oid": "650000000000000000000007" }
+        ],
+        "createdBy": { "$oid": "650000000000000000000999" },
+        "visibility": "public"
+    },
+    {
+        "title": "Minecraft",
+        "description": "Jeu sandbox de création et survie.",
+        "genres": [ "Sandbox", "Survie" ],
+        "consoles": [
+            { "$oid": "650000000000000000000001" },
+            { "$oid": "650000000000000000000002" },
+            { "$oid": "650000000000000000000003" },
+            { "$oid": "650000000000000000000004" },
+            { "$oid": "650000000000000000000005" },
+            { "$oid": "650000000000000000000007" },
+            { "$oid": "650000000000000000000010" }
+        ],
+        "createdBy": { "$oid": "650000000000000000000999" },
+        "visibility": "public"
+    },
+
+    {
+        "title": "Red Dead Redemption 2",
+        "description": "Western en monde ouvert ultra immersif.",
+        "genres": [ "Action", "Aventure" ],
+        "consoles": [
+            { "$oid": "650000000000000000000002" },
+            { "$oid": "650000000000000000000004" },
+            { "$oid": "650000000000000000000007" }
+        ],
+        "createdBy": { "$oid": "650000000000000000000999" },
+        "visibility": "public"
+    },
+
+    {
+        "title": "Cyberpunk 2077",
+        "description": "RPG futuriste en monde ouvert.",
+        "genres": [ "RPG", "FPS" ],
+        "consoles": [
+            { "$oid": "650000000000000000000001" },
+            { "$oid": "650000000000000000000003" },
+            { "$oid": "650000000000000000000007" }
+        ],
+        "createdBy": { "$oid": "650000000000000000000999" },
+        "visibility": "public"
+    },
+
+    {
+        "title": "Elden Ring",
+        "description": "Action-RPG exigeant par FromSoftware.",
+        "genres": [ "RPG", "Action" ],
+        "consoles": [
+            { "$oid": "650000000000000000000001" },
+            { "$oid": "650000000000000000000002" },
+            { "$oid": "650000000000000000000003" },
+            { "$oid": "650000000000000000000004" },
+            { "$oid": "650000000000000000000007" }
+        ],
+        "createdBy": { "$oid": "650000000000000000000999" },
+        "visibility": "public"
+    }
+]
