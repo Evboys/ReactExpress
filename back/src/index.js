@@ -12,7 +12,7 @@ app.use(express.json());
 
 // Test API
 app.get("/", (req, res) => {
-  res.send("API running 🚀");
+  res.send("API running ");
 });
 
 // GET user by username
@@ -25,6 +25,12 @@ app.get("/user/:username", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+//GET All users
+app.get("/users", async (req, res) => {
+    const users = await User.find();
+    res.json(users);
+});
+
 
 
 
