@@ -26,12 +26,17 @@ export const register = async (req, res) => {
             password: hashedPassword
         });
 
-        res.status(201).json({
-            id: user._id,
-            username: user.username
+        return res.status(201).json({
+            message: "Utilisateur créé",
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email
+            }
         });
     } catch (error) {
-        res.status(500).json({ message: "Erreur serveur" });
+        console.error("REGISTER ERROR:", error);
+        return res.status(500).json({ message: "Erreur serveur" });
     }
 };
 
@@ -39,27 +44,40 @@ export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
 
+        if (!email || !password) {
+            return res.status(400).json({ message: "Champs manquants" });
+        }
+
         const user = await User.findOne({ email });
-        if (!user)
-            return res.status(401).json({ message: "E-mail invalides" });
+        if (!user) {
+            return res.status(401).json({ message: "Identifiants invalides" });
+        }
 
         const match = await bcrypt.compare(password, user.password);
-        if (!match)
-            return res.status(401).json({ message: "Mot de passe incorrect" });
+        if (!match) {
+            return res.status(401).json({ message: "Identifiants invalides" });
+        }
+
+        if (!process.env.JWT_SECRET) {
+            throw new Error("JWT_SECRET manquant");
+        }
+
         const token = jwt.sign(
             { id: user._id, username: user.username },
             process.env.JWT_SECRET,
             { expiresIn: "1h" }
         );
 
-        res.json({
+        return res.json({
             token,
             user: {
                 id: user._id,
-                username: user.username
+                username: user.username,
+                email: user.email
             }
         });
-    } catch {
-        res.status(500).json({ message: "Erreur serveur" });
+    } catch (error) {
+        console.error("LOGIN ERROR:", error);
+        return res.status(500).json({ message: "Erreur serveur" });
     }
 };
