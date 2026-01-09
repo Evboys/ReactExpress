@@ -6,7 +6,7 @@ import {
     createGame,
     updateGame,
     deleteGame
-} from "../controllers/game.controller.js";
+} from "../controllers/games.controller.js";
 
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 
