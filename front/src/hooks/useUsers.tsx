@@ -11,7 +11,7 @@ export function useUsers() {
     fetchAllUsers()
       .then(setUsers)
       .catch(err => setError(err.message))
-      .finally(() => setLoading(false));
+      .finally(() => setLoading(true));
   }, []);
 
   return { users, loading, error };

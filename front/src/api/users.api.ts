@@ -1,6 +1,6 @@
 import type { User } from "../types/User";
 
-const BASE = "https://reactexpress-tnkm.onrender.com/api/users";
+const BASE = "https://reactexpress-tnkm.onrender.com/api/auth";
 
 // GET ALL
 export async function fetchAllUsers(): Promise<User[]> {
