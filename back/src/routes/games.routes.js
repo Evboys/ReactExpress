@@ -8,7 +8,7 @@ import {
     deleteGame
 } from "../controllers/games.controller.js";
 
-import { authMiddleware } from "../middlewares/auth.middleware.js";
+import { authMiddleware } from "../midlleware/auth.middleware.js";
 
 const router = express.Router();
 
