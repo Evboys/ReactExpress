@@ -12,7 +12,21 @@ const gameSchema = new mongoose.Schema(
             required: true
         },
 
-        genres: [String],
+        genres: {
+            type: [String],
+            default: []
+        },
+
+        images: {
+            cover: {
+                type: String,
+                required: true
+            },
+            screenshots: {
+                type: [String],
+                default: []
+            }
+        },
 
         consoles: [
             {

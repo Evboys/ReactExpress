@@ -1,10 +1,11 @@
 import express from "express";
-import { authMiddleware } from "../midlleware/auth.middleware.js";
+import { authMiddleware } from "../middlewares/auth.middleware.js";
 import { register, login } from "../controllers/auth.controller.js";
+import User from "../models/User.js";
 
 const router = express.Router();
 
-
+//Routes testées et fonctionnelles
 router.post("/register", register);
 router.post("/login", login);
 

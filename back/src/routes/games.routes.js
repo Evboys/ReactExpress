@@ -8,14 +8,16 @@ import {
     deleteGame
 } from "../controllers/games.controller.js";
 
-import { authMiddleware } from "../midlleware/auth.middleware.js";
+import { authMiddleware } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
-
+//Routes testées et fonctionnelles
 router.get("/", getAllGames);
+///api/games/search?title=[TitreDuJeu]
 router.get("/search", searchGames);
+//Route fonctionnelles servira pour récupérer les détails d'un jeu pour la page de détails
 router.get("/:id", getGameById);
-
+//TODO Routes non testées
 router.post("/", authMiddleware, createGame);
 router.put("/:id", authMiddleware, updateGame);
 router.delete("/:id", authMiddleware, deleteGame);

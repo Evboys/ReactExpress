@@ -10,6 +10,17 @@ export const register = async (req, res) => {
             return res.status(400).json({ message: "Champs manquants" });
         }
 
+        if (!isValidEmail(email)) {
+            return res.status(400).json({ message: "Email invalide" });
+        }
+
+        if (!isValidPassword(password)) {
+            return res.status(400).json({
+                message:
+                    "Mot de passe invalide (8 caractères min, 1 majuscule, 1 minuscule, 1 chiffre, 1 caractère spécial)"
+            });
+        }
+
         const exists = await User.findOne({
             $or: [{ email }, { username }]
         });
@@ -38,6 +49,12 @@ export const register = async (req, res) => {
         console.error("REGISTER ERROR:", error);
         return res.status(500).json({ message: "Erreur serveur" });
     }
+};
+const isValidEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+};
+const isValidPassword = (password) => {
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(password);
 };
 
 export const login = async (req, res) => {

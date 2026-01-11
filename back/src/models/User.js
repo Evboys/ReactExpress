@@ -17,7 +17,18 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true
+    },
+    favorites: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Game"
+      }],
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user"
     }
+
   },
   { timestamps: true }
 );

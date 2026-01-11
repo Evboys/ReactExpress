@@ -22,15 +22,15 @@ export const getGameById = async (req, res) => {
 };
 //Recuperer un jeu par son titre
 export const searchGames = async (req, res) => {
-    const q = req.query.q || "";
+    const title = req.query.title || "";
 
     const games = await Game.find({
-        title: { $regex: q, $options: "i" }
+        title: { $regex: title, $options: "i" }
     });
 
     res.json(games);
 };
-//Créer un jeu 
+//Crï¿½er un jeu 
 export const createGame = async (req, res) => {
     const game = await Game.create({
         ...req.body,
@@ -69,5 +69,5 @@ export const deleteGame = async (req, res) => {
     }
 
     await game.deleteOne();
-    res.json({ message: "Jeu supprimé" });
+    res.json({ message: "Jeu supprimï¿½" });
 };
