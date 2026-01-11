@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
+import RevokedToken from "../models/RevokedTokens.js";
 import jwt from "jsonwebtoken";
 
 export const register = async (req, res) => {
@@ -69,6 +70,26 @@ export const login = async (req, res) => {
         return res.status(500).json({ message: "Erreur serveur" });
     }
 };
+
+export const logout = async (req, res) => {
+    try {
+        const auth = req.headers.authorization;
+        const token = auth.split(" ")[1];
+
+        const decoded = jwt.decode(token);
+
+        await RevokedToken.create({
+            token,
+            expiresAt: new Date(decoded.exp * 1000)
+        });
+
+        res.json({ message: "Déconnexion réussie" });
+    } catch (error) {
+        console.error("LOGOUT ERROR:", error);
+        res.status(500).json({ message: "Erreur serveur" });
+    }
+};
+
 
 export const getProfile = async (req, res) => {
     try {
