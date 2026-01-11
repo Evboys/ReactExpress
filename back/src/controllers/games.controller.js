@@ -30,7 +30,7 @@ export const searchGames = async (req, res) => {
 
     res.json(games);
 };
-//Cr�er un jeu 
+//Créer un jeu 
 export const createGame = async (req, res) => {
     const game = await Game.create({
         ...req.body,
@@ -48,7 +48,7 @@ export const updateGame = async (req, res) => {
     }
 
     if (game.createdBy.toString() !== req.user.id) {
-        return res.status(403).json({ message: "Interdit" });
+        return res.status(403).json({ message: "Vous n'êtes pas autorisé à modifier ce jeu" });
     }
 
     Object.assign(game, req.body);
@@ -65,9 +65,9 @@ export const deleteGame = async (req, res) => {
     }
 
     if (game.createdBy.toString() !== req.user.id) {
-        return res.status(403).json({ message: "Interdit" });
+        return res.status(403).json({ message: "Vous n'êtes pas autorisé à supprimer ce jeu" });
     }
 
     await game.deleteOne();
-    res.json({ message: "Jeu supprim�" });
+    res.json({ message: "Jeu supprimé" });
 };

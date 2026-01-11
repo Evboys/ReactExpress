@@ -8,7 +8,8 @@ import { authMiddleware } from "../middlewares/auth.middleware.js";
 
 
 const router = express.Router();
-//TODO Routes non testées
+
+//Routes testées et fonctionnelles
 router.get("/", authMiddleware, getFavorites);
 router.post("/:gameId", authMiddleware, addFavorite);
 router.delete("/:gameId", authMiddleware, removeFavorite);

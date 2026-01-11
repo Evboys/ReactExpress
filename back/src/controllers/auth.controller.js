@@ -6,21 +6,6 @@ export const register = async (req, res) => {
     try {
         const { username, email, password } = req.body;
 
-        if (!username || !email || !password) {
-            return res.status(400).json({ message: "Champs manquants" });
-        }
-
-        if (!isValidEmail(email)) {
-            return res.status(400).json({ message: "Email invalide" });
-        }
-
-        if (!isValidPassword(password)) {
-            return res.status(400).json({
-                message:
-                    "Mot de passe invalide (8 caractères min, 1 majuscule, 1 minuscule, 1 chiffre, 1 caractère spécial)"
-            });
-        }
-
         const exists = await User.findOne({
             $or: [{ email }, { username }]
         });
@@ -50,20 +35,10 @@ export const register = async (req, res) => {
         return res.status(500).json({ message: "Erreur serveur" });
     }
 };
-const isValidEmail = (email) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-};
-const isValidPassword = (password) => {
-    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(password);
-};
 
 export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
-
-        if (!email || !password) {
-            return res.status(400).json({ message: "Champs manquants" });
-        }
 
         const user = await User.findOne({ email });
         if (!user) {
@@ -75,12 +50,8 @@ export const login = async (req, res) => {
             return res.status(401).json({ message: "Identifiants invalides" });
         }
 
-        if (!process.env.JWT_SECRET) {
-            throw new Error("JWT_SECRET manquant");
-        }
-
         const token = jwt.sign(
-            { id: user._id, username: user.username },
+            { id: user._id, username: user.username, role: user.role },
             process.env.JWT_SECRET,
             { expiresIn: "1h" }
         );
@@ -95,6 +66,19 @@ export const login = async (req, res) => {
         });
     } catch (error) {
         console.error("LOGIN ERROR:", error);
+        return res.status(500).json({ message: "Erreur serveur" });
+    }
+};
+
+export const getProfile = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select("-password");
+        if (!user) {
+            return res.status(404).json({ message: "Utilisateur non trouvé" });
+        }
+        return res.json({ user });
+    } catch (error) {
+        console.error("GET PROFILE ERROR:", error);
         return res.status(500).json({ message: "Erreur serveur" });
     }
 };

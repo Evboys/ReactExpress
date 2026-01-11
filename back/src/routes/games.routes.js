@@ -17,7 +17,7 @@ router.get("/", getAllGames);
 router.get("/search", searchGames);
 //Route fonctionnelles servira pour récupérer les détails d'un jeu pour la page de détails
 router.get("/:id", getGameById);
-//TODO Routes non testées
+//Route fonctionnelles pour la création, la mise à jour et la suppression de jeux
 router.post("/", authMiddleware, createGame);
 router.put("/:id", authMiddleware, updateGame);
 router.delete("/:id", authMiddleware, deleteGame);

@@ -5,13 +5,14 @@ import {
     updateConsole,
     deleteConsole
 } from "../controllers/consoles.controller.js";
-import { authMiddleware } from "../middlewares/auth.middleware.js";
+import { authMiddleware, isAdmin } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
-//Routes testées et fonctionnelles
+
 router.get("/", getAllConsoles);
-//TODO Routes non testées
-router.post("/", authMiddleware, createConsole);
-router.put("/:id", authMiddleware, updateConsole);
-router.delete("/:id", authMiddleware, deleteConsole);
+//Routes testées et fonctionnelles, utilisable par l'admin uniquement
+router.post("/", authMiddleware,isAdmin, createConsole);
+router.put("/:id", authMiddleware,isAdmin, updateConsole);
+router.delete("/:id", authMiddleware,isAdmin, deleteConsole);
+
 export default router;

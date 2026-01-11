@@ -16,34 +16,26 @@ export const createConsole = async (req, res) => {
 };
 //Mettre a jour une console
 export const updateConsole = async (req, res) => {
-    const game = await Console.findById(req.params.id);
+    const consoles = await Console.findById(req.params.id);
 
-    if (!game) {
-        return res.status(404).json({ message: "Jeu introuvable" });
+    if (!consoles) {
+        return res.status(404).json({ message: "Console introuvable" });
     }
 
-    if (game.createdBy.toString() !== req.user.id) {
-        return res.status(403).json({ message: "Interdit" });
-    }
+    Object.assign(consoles, req.body);
+    await consoles.save();
 
-    Object.assign(game, req.body);
-    await game.save();
-
-    res.json(game);
+    res.json(consoles);
 };
 
 //Supprimer une console
 export const deleteConsole = async (req, res) => {
-    const game = await Console.findById(req.params.id);
+    const consoles = await Console.findById(req.params.id);
 
-    if (!game) {
+    if (!consoles) {
         return res.status(404).json({ message: "Console introuvable" });
     }
 
-    if (game.createdBy.toString() !== req.user.id) {
-        return res.status(403).json({ message: "Interdit" });
-    }
-
-    await game.deleteOne();
+    await consoles.deleteOne();
     res.json({ message: "Console supprimée" });
 };
