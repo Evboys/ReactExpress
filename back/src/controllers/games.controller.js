@@ -1,73 +1,119 @@
 import Game from "../models/Game.js";
-//Recuperer tous les jeux
-export const getAllGames = async (req, res) => {
-    const games = await Game.find({ visibility: "public" })
-        .populate("consoles")
-        .populate("createdBy", "username");
 
-    res.json(games);
-};
+export const getGames = async (req, res) => {
+    try {
+        const query = {};
 
-//Recuperer un jeu par son ID
-export const getGameById = async (req, res) => {
-    const game = await Game.findById(req.params.id)
-        .populate("consoles")
-        .populate("createdBy", "username");
+        if (req.query.search) {
+            query.title = { $regex: req.query.search, $options: "i" };
+        }
 
-    if (!game) {
-        return res.status(404).json({ message: "Jeu introuvable" });
+        if (req.query.genre) {
+            query.genres = req.query.genre;
+        }
+
+        if (req.query.console) {
+            query.consoles = req.query.console;
+        }
+
+        if (req.user) {
+            query.$or = [
+                { visibility: "public" },
+                { visibility: "unlisted" },
+                { createdBy: req.user.id }
+            ];
+        } else {
+            query.visibility = "public";
+        }
+
+        const games = await Game.find(query)
+            .populate("consoles", "name image")
+            .populate("createdBy", "username");
+
+        res.json(games);
+    } catch (error) {
+        console.error("GET GAMES ERROR:", error);
+        res.status(500).json({ message: "Erreur serveur" });
     }
-
-    res.json(game);
 };
-//Recuperer un jeu par son titre
-export const searchGames = async (req, res) => {
-    const title = req.query.title || "";
 
-    const games = await Game.find({
-        title: { $regex: title, $options: "i" }
-    });
+export const getGameById = async (req, res) => {
+    try {
+        const game = await Game.findById(req.params.id)
+            .populate("consoles", "name image")
+            .populate("createdBy", "username");
 
-    res.json(games);
+        if (!game) {
+            return res.status(404).json({ message: "Jeu introuvable" });
+        }
+
+        // 🔐 visibilité sur fiche
+        if (
+            game.visibility === "private" &&
+            (!req.user || game.createdBy._id.toString() !== req.user.id)
+        ) {
+            return res.status(403).json({ message: "Accès refusé" });
+        }
+
+        res.json(game);
+    } catch (error) {
+        console.error("GET GAME ERROR:", error);
+        res.status(500).json({ message: "Erreur serveur" });
+    }
 };
-//Créer un jeu 
+
 export const createGame = async (req, res) => {
-    const game = await Game.create({
-        ...req.body,
-        createdBy: req.user.id
-    });
+    try {
+        const game = await Game.create({
+            ...req.body,
+            createdBy: req.user.id
+        });
 
-    res.status(201).json(game);
+        res.status(201).json(game);
+    } catch (error) {
+        console.error("CREATE GAME ERROR:", error);
+        res.status(500).json({ message: "Erreur serveur" });
+    }
 };
 
 export const updateGame = async (req, res) => {
-    const game = await Game.findById(req.params.id);
+    try {
+        const game = await Game.findById(req.params.id);
 
-    if (!game) {
-        return res.status(404).json({ message: "Jeu introuvable" });
+        if (!game) {
+            return res.status(404).json({ message: "Jeu introuvable" });
+        }
+
+        if (game.createdBy.toString() !== req.user.id) {
+            return res.status(403).json({ message: "Non autorisé" });
+        }
+
+        Object.assign(game, req.body);
+        await game.save();
+
+        res.json(game);
+    } catch (error) {
+        console.error("UPDATE GAME ERROR:", error);
+        res.status(500).json({ message: "Erreur serveur" });
     }
-
-    if (game.createdBy.toString() !== req.user.id) {
-        return res.status(403).json({ message: "Vous n'êtes pas autorisé à modifier ce jeu" });
-    }
-
-    Object.assign(game, req.body);
-    await game.save();
-
-    res.json(game);
 };
 
 export const deleteGame = async (req, res) => {
-    const game = await Game.findById(req.params.id);
+    try {
+        const game = await Game.findById(req.params.id);
 
-    if (!game) {
-        return res.status(404).json({ message: "Jeu introuvable" });
+        if (!game) {
+            return res.status(404).json({ message: "Jeu introuvable" });
+        }
+
+        if (game.createdBy.toString() !== req.user.id) {
+            return res.status(403).json({ message: "Non autorisé" });
+        }
+
+        await game.deleteOne();
+        res.json({ message: "Jeu supprimé" });
+    } catch (error) {
+        console.error("DELETE GAME ERROR:", error);
+        res.status(500).json({ message: "Erreur serveur" });
     }
-
-    if (game.createdBy.toString() !== req.user.id) {
-        return res.status(403).json({ message: "Vous n'êtes pas autorisé à supprimer ce jeu" });
-    }
-
-    await game.deleteOne();
-    res.json({ message: "Jeu supprimé" });
 };
