@@ -18,8 +18,8 @@ app.use("/api/games", gamesRoutes);
 app.use("/api/consoles", consolesRoutes);
 app.use("/api/favorites", favoritesRoutes);
 
-app.get("/", (req, res) => {
-    res.send("API en Marche");
+app.get("/api/ping", (req, res) => {
+res.json({ status: "ok" });
 });
 
 export default app;

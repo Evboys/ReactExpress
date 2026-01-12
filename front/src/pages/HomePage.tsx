@@ -1,22 +1,18 @@
-import { useUsers } from "../hooks/useUsers";
-import  Loader  from "../components/ui/Loader"
+import { useEffect } from "react";
+import { http } from "../api/http";
+import  Login  from "../components/Login";
 
 export default function HomePage() {
-    const { users, loading, error } = useUsers();
-
-    if (loading) return <Loader/>;
-    if (error) return <p>Error: {error}</p>;
+    useEffect(() => {
+        http("/api/ping")
+            .then(data => console.log("API:", data))
+            .catch(err => console.error(err));
+    }, []);
 
     return (
         <div>
-            <h1>Users</h1>
-            <ul>
-                {users.map(user => (
-                    <li key={user.username}>
-                        {user.username} - {user.email}
-                    </li>
-                ))}
-            </ul>
+            <h1>Home</h1>
+            <Login />
         </div>
     );
 }

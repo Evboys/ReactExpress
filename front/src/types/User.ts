@@ -2,5 +2,6 @@ export type User = {
     username: string;
     email: string;
     password: string;
+    role:string;
     createdAt: string;
 };
