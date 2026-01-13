@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import {
     fetchProfile,
     loginUser,
-    logout as logoutUser,
+    logoutUser,
     getToken
 } from "../services/auth.services";
 import type { User } from "../types/User";
@@ -10,7 +10,7 @@ import type { User } from "../types/User";
 type AuthContextType = {
     user: User | null;
     token: string | null;
-    loginUser: (email: string, password: string) => Promise<void>;
+    login: (email: string, password: string) => Promise<void>;
     logout: () => void;
     loading: boolean;
 };
@@ -55,7 +55,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             value={{
                 user,
                 token,
-                loginUser: handleLogin,
+                login: handleLogin,
                 logout: handleLogout,
                 loading
             }}

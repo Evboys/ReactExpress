@@ -30,7 +30,11 @@ export function login(data: LoginPayload) {
         body: JSON.stringify(data)
     });
 }
-
+export function logout() {
+    return http("/api/auth/logout", {
+        method: "POST"
+    });
+}
 export function getProfile() {
     return http<{ user: User }>("/api/auth/me");
 }

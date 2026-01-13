@@ -1,10 +1,9 @@
-import Header from "../components/layout/Header"
-
-export default function HomePage() {
+﻿export default function HomePage() {
     return (
-        <div>
+        <div className="bg-red-50">
             <h1>Bienvenue</h1>
             <p>Application React + Express</p>
+                
         </div>
     );
 }

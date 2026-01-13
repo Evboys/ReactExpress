@@ -1,9 +1,12 @@
 import { useState } from "react";
-import { useAuth } from "../../auth/useAuth";
+import { registerUser } from "../../services/auth.services";
 
-export default function LoginForm({ onSuccess }: { onSuccess: () => void }) {
-    const { login } = useAuth();
-
+export default function RegisterForm({
+    onSuccess
+}: {
+    onSuccess: () => void;
+}) {
+    const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
@@ -15,10 +18,10 @@ export default function LoginForm({ onSuccess }: { onSuccess: () => void }) {
         setLoading(true);
 
         try {
-            await login(email, password);
+            await registerUser(username, email, password);
             onSuccess();
         } catch {
-            setError("Identifiants invalides");
+            setError("Erreur lors de l’inscription");
         } finally {
             setLoading(false);
         }
@@ -26,16 +29,23 @@ export default function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
-            <h2 className="text-xl font-bold text-center">Connexion</h2>
+            <h2 className="text-xl font-bold text-center">Inscription</h2>
 
             {error && (
                 <p className="text-red-500 text-sm text-center">{error}</p>
             )}
 
             <input
+                placeholder="Pseudo"
+                className="w-full px-4 py-2 rounded bg-zinc-700"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+            />
+
+            <input
                 type="email"
                 placeholder="Email"
-                className="w-full px-4 py-2 rounded bg-zinc-700 outline-none"
+                className="w-full px-4 py-2 rounded bg-zinc-700"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
             />
@@ -43,7 +53,7 @@ export default function LoginForm({ onSuccess }: { onSuccess: () => void }) {
             <input
                 type="password"
                 placeholder="Mot de passe"
-                className="w-full px-4 py-2 rounded bg-zinc-700 outline-none"
+                className="w-full px-4 py-2 rounded bg-zinc-700"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
@@ -52,7 +62,7 @@ export default function LoginForm({ onSuccess }: { onSuccess: () => void }) {
                 disabled={loading}
                 className="w-full bg-indigo-600 hover:bg-indigo-700 py-2 rounded font-semibold"
             >
-                {loading ? "Connexion..." : "Se connecter"}
+                {loading ? "Création..." : "Créer un compte"}
             </button>
         </form>
     );

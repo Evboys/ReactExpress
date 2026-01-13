@@ -1,5 +1,5 @@
 import { useState } from "react";
-import LoginModal from "./LoginModal";
+import AuthModal from "./AuthModal";
 
 export default function LoginButton() {
     const [open, setOpen] = useState(false);
@@ -7,7 +7,7 @@ export default function LoginButton() {
     return (
         <>
             <button onClick={() => setOpen(true)}>Login</button>
-            {open && <LoginModal onClose={() => setOpen(false)} />}
+            {open && <AuthModal onClose={() => setOpen(false)} open={false} />}
         </>
     );
 }

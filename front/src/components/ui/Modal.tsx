@@ -1,29 +1,31 @@
 export default function Modal({
-    children,
-    onClose
+    open,
+    onClose,
+    children
 }: {
-    children: React.ReactNode;
+    open: boolean;
     onClose: () => void;
+    children: React.ReactNode;
 }) {
+    if (!open) return null;
+
     return (
         <div
             style={{
                 position: "fixed",
                 inset: 0,
-                background: "rgba(0,0,0,0.5)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center"
+                background: "rgba(0,0,0,0.5)"
             }}
             onClick={onClose}
         >
             <div
                 style={{
-                    background: "#fff",
-                    padding: "1.5rem",
-                    minWidth: 300
+                    background: "white",
+                    padding: 20,
+                    width: 400,
+                    margin: "100px auto"
                 }}
-                onClick={(e) => e.stopPropagation()}
+                onClick={e => e.stopPropagation()}
             >
                 {children}
             </div>
