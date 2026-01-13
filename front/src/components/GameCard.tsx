@@ -1,8 +1,11 @@
 import type { Game } from "../types/Games";
+import { useNavigate } from "react-router-dom";
 
 export default function GameCard({ game }: { game: Game }) {
+    const navigate = useNavigate();
+
     return (
-        <div className="bg-zinc-800 rounded overflow-hidden cursor-pointer hover:scale-[1.02] transition">
+        <div onClick={() => navigate(`/games/${game._id}`)} className="bg-zinc-800 rounded overflow-hidden cursor-pointer hover:scale-[1.02] transition">
             <img
                 src={game.images.cover}
                 alt={game.title}
