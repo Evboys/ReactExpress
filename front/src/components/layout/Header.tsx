@@ -9,7 +9,7 @@ export default function Header() {
     return (
         <>
             <header className="flex justify-between items-center px-6 py-4 bg-zinc-900 border-b border-zinc-800">
-                <h1 className="font-bold text-lg">🎮 GameLib</h1>
+                <h1 className="font-bold text-lg">GameLib</h1>
 
                 {user ? (
                     <div className="flex items-center gap-4">

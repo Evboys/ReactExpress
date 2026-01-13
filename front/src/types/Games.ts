@@ -1,4 +1,5 @@
-import type Console from "../types/Consoles"
+import type { Console } from "./Consoles"
+
 export type Game = {
     _id: string;
     title: string;
