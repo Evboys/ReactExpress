@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { registerUser } from "../../services/auth.services";
+import Loader from "../ui/Loader";
 
 export default function RegisterForm({
     onSuccess
@@ -10,18 +11,24 @@ export default function RegisterForm({
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
+    const [success, setSuccess] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
+        setSuccess(null);
         setLoading(true);
 
         try {
             await registerUser(username, email, password);
-            onSuccess();
+            setSuccess("Compte crÃ©Ã© avec succÃ¨s ");
+
+            setTimeout(() => {
+                onSuccess();
+            }, 1000);
         } catch {
-            setError("Erreur lors de l’inscription");
+            setError("Erreur lors de l'inscription");
         } finally {
             setLoading(false);
         }
@@ -33,6 +40,10 @@ export default function RegisterForm({
 
             {error && (
                 <p className="text-red-500 text-sm text-center">{error}</p>
+            )}
+
+            {success && (
+                <p className="text-green-500 text-sm text-center">{success}</p>
             )}
 
             <input
@@ -60,9 +71,9 @@ export default function RegisterForm({
 
             <button
                 disabled={loading}
-                className="w-full bg-indigo-600 hover:bg-indigo-700 py-2 rounded font-semibold"
+                className="w-full bg-indigo-600 hover:bg-indigo-700 py-2 rounded font-semibold flex justify-center"
             >
-                {loading ? "Création..." : "Créer un compte"}
+                {loading ? <Loader /> : "CrÃ©er un compte"}
             </button>
         </form>
     );

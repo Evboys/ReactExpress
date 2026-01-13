@@ -1,10 +1,13 @@
+import { ReactNode } from "react";
 import Header from "./Header";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: { children: ReactNode }) {
     return (
-        <>
+        <div className="min-h-screen bg-zinc-900 text-zinc-100">
             <Header />
-            <main style={{ padding: "1rem" }}>{children}</main>
-        </>
+            <main className="max-w-6xl mx-auto p-6">
+                {children}
+            </main>
+        </div>
     );
 }

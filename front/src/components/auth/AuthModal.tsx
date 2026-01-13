@@ -20,7 +20,7 @@ export default function AuthModal({
                     onClick={onClose}
                     className="absolute top-3 right-3 text-zinc-400 hover:text-white"
                 >
-                    ?
+                    X
                 </button>
 
                 {mode === "login" ? (
@@ -32,7 +32,7 @@ export default function AuthModal({
                                 className="text-indigo-400 hover:underline"
                                 onClick={() => setMode("register")}
                             >
-                                S’inscrire
+                                Sâ€™inscrire
                             </button>
                         </p>
                     </>
@@ -40,7 +40,7 @@ export default function AuthModal({
                     <>
                         <RegisterForm onSuccess={() => setMode("login")} />
                         <p className="text-sm text-center mt-4 text-zinc-400">
-                            Déjà un compte ?{" "}
+                            DÃ©jÃ  un compte ?{" "}
                             <button
                                 className="text-indigo-400 hover:underline"
                                 onClick={() => setMode("login")}
