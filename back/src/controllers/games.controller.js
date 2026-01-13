@@ -47,7 +47,6 @@ export const getGameById = async (req, res) => {
             return res.status(404).json({ message: "Jeu introuvable" });
         }
 
-        // 🔐 visibilité sur fiche
         if (
             game.visibility === "private" &&
             (!req.user || game.createdBy._id.toString() !== req.user.id)
