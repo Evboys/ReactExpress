@@ -18,6 +18,8 @@ const LayoutWrapper = ({ children }: { children: React.ReactNode }) => (
   </AuthProvider>
 );
 
+const basename = import.meta.env.DEV ? "" : "/ReactExpress";
+
 export const router = createHashRouter(
   [
     {
@@ -58,6 +60,6 @@ export const router = createHashRouter(
     },
   ],
   {
-    basename: "/ReactExpress",
+    basename: basename,
   }
 );
