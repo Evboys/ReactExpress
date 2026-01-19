@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { getConsoles, deleteConsole } from "../api/consoles.api";
 import type { Console } from "../types/Consoles";
 import ConsoleForm from "../components/forms/ConsoleForm";
-import { Pencil, Trash2, Plus } from "lucide-react";
+import { Pencil, Trash2} from "lucide-react";
 
 export default function AdminConsolesPage() {
     const [consoles, setConsoles] = useState<Console[]>([]);

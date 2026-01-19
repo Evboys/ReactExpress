@@ -1,4 +1,4 @@
-import type { Console } from "../types/Console";
+import type { Console } from "../types/Consoles";
 
 type Props = {
     consoles: Console[];
