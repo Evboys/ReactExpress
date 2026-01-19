@@ -49,7 +49,7 @@ En développement, les requêtes `/api/**` sont automatiquement redirigées vers
 ```typescript
 proxy: {
   "/api": {
-    target: "http://localhost:4000/",
+    target: "Lien choisis précédemment a saisir",
     changeOrigin: true
   }
 }
@@ -95,13 +95,14 @@ Activez GitHub Pages dans les paramètres du repo :
 - Source : Deploy from a branch
 - Branch : `gh-pages`
 
-L'app sera accessible à : `https://username.github.io/ReactExpress/`
+L'app sera accessible à : `https://evboys.github.io/ReactExpress/`
+
+A la déconnexion penser a remettre le lien initial ou sinon ERROR 404 liee a githubpages
 
 ## 📝 Notes pour les Contributeurs
 
 - Les mocks sont dans `src/api/mocks/`
 - Pour ajouter un mock : éditez le fichier correspondant et activez `VITE_USE_MOCK=true`
-- Ne commitez pas `.env.development.local` (il est dans `.gitignore`)
 - Le backend en ligne est sur `https://reactexpress-tnkm.onrender.com`
 
 ## 🔧 Scripts Disponibles
@@ -119,6 +120,8 @@ npm run lint     # Vérifier les erreurs de lint
 ### Prérequis
 - Node.js >= 18
 - MongoDB (local ou cloud)
+
+A savoir les acces a la DB ne sont pas fournis mais accessible via les JSON dans .back ou directeent utilise le back online
 
 ### Installation
 
@@ -270,7 +273,6 @@ VITE_API_URL=http://localhost:4000/api
 
 ## 📚 Ressources Additionnelles
 
-- API externe pour images/screenshots : https://www.igdb.com/api
 - Documentation MongoDB : https://docs.mongodb.com
 - Documentation Express : https://expressjs.com
 - Documentation JWT : https://jwt.io
