@@ -1,7 +1,12 @@
 import { http } from "./http";
 import type { Console } from "../types/Consoles";
+import { API_CONFIG } from "../config/api.config";
+import { mockConsoles } from "./mocks/consoles.mock";
 
 export function getConsoles() {
+    if (API_CONFIG.USE_MOCK) {
+        return Promise.resolve(mockConsoles);
+    }
     return http<Console[]>("/api/consoles");
 }
 export function deleteConsole(id: string) {
