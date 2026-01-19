@@ -18,6 +18,8 @@ const LayoutWrapper = ({ children }: { children: React.ReactNode }) => (
   </AuthProvider>
 );
 
+const basename = import.meta.env.DEV ? "" : "/ReactExpress";
+
 export const router = createHashRouter(
   [
     {
@@ -56,5 +58,8 @@ export const router = createHashRouter(
       path: "*",
       element: <LayoutWrapper><NotFoundPage /></LayoutWrapper>,
     },
-  ]
+  ],
+  {
+    basename: basename,
+  }
 );
