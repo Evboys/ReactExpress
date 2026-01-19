@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../auth/useAuth";
 import { deleteGame, getMyGames } from "../api/games.api";
 import type { Game } from "../types/Games";
 import GameForm from "../components/forms/GameForm";
 import { Pencil, Trash2, Plus } from "lucide-react";
 
 export default function MyGamesPage() {
-  const { user } = useAuth();
   const [games, setGames] = useState<Game[]>([]);
   const [editingGame, setEditingGame] = useState<Game | null>(null);
   const [showForm, setShowForm] = useState(false);
@@ -61,6 +59,11 @@ export default function MyGamesPage() {
             <span>{game.title}</span>
 
             <div className="flex gap-3">
+              <img
+              src={game.images.cover}
+              alt={game.title}
+              className="object-cover rounded w-16 h-20"
+            />
               <button
                 onClick={() => {
                   setEditingGame(game);

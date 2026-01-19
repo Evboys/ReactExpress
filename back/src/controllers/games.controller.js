@@ -16,14 +16,18 @@ export const getGames = async (req, res) => {
             query.consoles = req.query.console;
         }
 
-        if (req.user) {
+        if (!req.user) {
+
+            query.visibility = "public";
+        } else if (req.user.role === "admin") {
+
+        } else {
+
             query.$or = [
                 { visibility: "public" },
                 { visibility: "unlisted" },
                 { createdBy: req.user.id }
             ];
-        } else {
-            query.visibility = "public";
         }
 
         const games = await Game.find(query)
@@ -36,6 +40,7 @@ export const getGames = async (req, res) => {
         res.status(500).json({ message: "Erreur serveur" });
     }
 };
+
 
 export const getGameById = async (req, res) => {
     try {
@@ -127,4 +132,34 @@ export const getMyGames = async (req, res) => {
         res.status(500).json({ message: "Erreur serveur" });
     }
 };
-    
+export const getAllGamesAdmin = async (req, res) => {
+    const games = await Game.find()
+        .populate("consoles", "name image")
+        .populate("createdBy", "username");
+
+    res.json(games);
+};
+
+export const updateAnyGame = async (req, res) => {
+    const game = await Game.findById(req.params.id);
+
+    if (!game) {
+        return res.status(404).json({ message: "Jeu introuvable" });
+    }
+
+    Object.assign(game, req.body);
+    await game.save();
+
+    res.json(game);
+};
+
+export const deleteAnyGame = async (req, res) => {
+    const game = await Game.findById(req.params.id);
+
+    if (!game) {
+        return res.status(404).json({ message: "Jeu introuvable" });
+    }
+
+    await game.deleteOne();
+    res.json({ message: "Jeu supprimé" });
+};

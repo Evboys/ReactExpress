@@ -15,7 +15,7 @@ export default function Header() {
         {/* LOGO */}
         <h1
           className="font-bold text-lg cursor-pointer"
-          onClick={() => navigate(`/`)}
+          onClick={() => navigate("/")}
         >
           GameLib
         </h1>
@@ -30,6 +30,7 @@ export default function Header() {
               <Gamepad2 size={18} />
               Mes jeux
             </button>
+
             {/* FAVORITES */}
             <button
               onClick={() => navigate("/favorites")}
@@ -39,15 +40,27 @@ export default function Header() {
               Favoris
             </button>
 
-            {/* ADMIN CONSOLES */}
+            {/* ADMIN ONLY */}
             {user.role === "admin" && (
-              <button
-                onClick={() => navigate("/admin/consoles")}
-                className="flex items-center gap-2 text-sm text-zinc-300 hover:text-indigo-400 transition"
-              >
-                <Server size={18} />
-                Consoles
-              </button>
+              <>
+                {/* ADMIN GAMES */}
+                <button
+                  onClick={() => navigate("/admin/games")}
+                  className="flex items-center gap-2 text-sm text-zinc-300 hover:text-indigo-400 transition"
+                >
+                  <Gamepad2 size={18} />
+                  Jeux
+                </button>
+
+                {/* ADMIN CONSOLES */}
+                <button
+                  onClick={() => navigate("/admin/consoles")}
+                  className="flex items-center gap-2 text-sm text-zinc-300 hover:text-indigo-400 transition"
+                >
+                  <Server size={18} />
+                  Consoles
+                </button>
+              </>
             )}
 
             {/* USER */}
