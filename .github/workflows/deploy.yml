@@ -24,6 +24,12 @@ jobs:
         working-directory: ./front
         run: npm ci
 
+      - name: Configure API URL for production
+        working-directory: ./front
+        run: |
+          sed -i 's|export async function http|const API_BASE_URL = "https://reactexpress-tnkm.onrender.com";\n\nexport async function http|' src/api/http.ts
+          sed -i 's|const res = await fetch(url,|const fullUrl = API_BASE_URL ? `${API_BASE_URL}${url}` : url;\n    const res = await fetch(fullUrl,|' src/api/http.ts
+
       - name: Build Vite app
         working-directory: ./front
         run: npm run build
