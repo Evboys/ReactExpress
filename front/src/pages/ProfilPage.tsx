@@ -4,7 +4,7 @@ export default function ProfilePage() {
     const { user, loading } = useAuth();
 
     if (loading) return <p>Chargement...</p>;
-    if (!user) return <p>Accès refusé</p>;
+    if (!user) return <p>AccÃ¨s refusÃ©</p>;
 
     return (
         <div>

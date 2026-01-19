@@ -115,4 +115,16 @@ export const deleteGame = async (req, res) => {
         console.error("DELETE GAME ERROR:", error);
         res.status(500).json({ message: "Erreur serveur" });
     }
+}
+export const getMyGames = async (req, res) => {
+    try {
+        const games = await Game.find({ createdBy: req.user.id })
+            .populate("consoles", "name image")
+            .populate("createdBy", "username");
+        res.json(games);
+    } catch (error) {
+        console.error("GET MY GAMES ERROR:", error);
+        res.status(500).json({ message: "Erreur serveur" });
+    }
 };
+    

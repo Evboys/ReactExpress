@@ -13,10 +13,12 @@ export type Game = {
     };
 
     consoles: Console[];
-    createdBy: string;
 
     visibility: "public" | "unlisted" | "private";
 
-    createdAt: string;
+    createdBy: {
+        _id: string;
+        username: string;
+    };
     updatedAt: string;
 };

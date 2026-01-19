@@ -38,3 +38,6 @@ export function logout() {
 export function getProfile() {
     return http<{ user: User }>("/api/auth/me");
 }
+export function getUserByUsername(username: string) {
+    return http<{ user: User; games: import("../types/Games").Game[] }>(`/api/auth/profile/${username}`);
+}

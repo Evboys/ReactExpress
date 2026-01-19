@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import Game from "../models/Game.js";
 import bcrypt from "bcrypt";
 import RevokedToken from "../models/RevokedTokens.js";
 import jwt from "jsonwebtoken";
@@ -100,6 +101,24 @@ export const getProfile = async (req, res) => {
         return res.json({ user });
     } catch (error) {
         console.error("GET PROFILE ERROR:", error);
+        return res.status(500).json({ message: "Erreur serveur" });
+    }
+};
+export const getUserByUsername = async (req, res) => {
+    try {
+        const user = await User.findOne({ username: req.params.username }).select("-password");
+
+        if (!user) {
+            return res.status(404).json({ message: "Utilisateur non trouvé" });
+        }
+        const games = await Game.find({
+            createdBy: user._id,
+            visibility: "public"
+        });
+
+        return res.json({ user, games });
+    } catch (error) {
+        console.error("Problème user id:", error);
         return res.status(500).json({ message: "Erreur serveur" });
     }
 };

@@ -20,9 +20,11 @@ export default function LoginForm({ onSuccess }: { onSuccess: () => void }) {
         try {
             await login(email, password);
             setSuccess("Connexion réussie");
+            
 
             setTimeout(() => {
                 onSuccess();
+                window.location.reload();
             }, 800);
         } catch {
             setError("Identifiants invalides");
