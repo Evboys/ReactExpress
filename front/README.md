@@ -1,73 +1,119 @@
-# React + TypeScript + Vite
+# React Express - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Application React + TypeScript pour gérer une collection de jeux vidéo.
 
-Currently, two official plugins are available:
+## 🚀 Démarrage Rapide
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Installation
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+L'app sera disponible à `http://localhost:3000`
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🎮 Configuration des Mocks
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Ce projet peut fonctionner avec des **mocks** (données fictives) ou avec le **backend réel**.
+
+### Mode Mock (Développement Local)
+
+Pour développer **sans backend**, activez les mocks :
+
+1. Créez un fichier `.env.development.local` (ou modifiez `.env.development`) :
 ```
+VITE_USE_MOCK=true
+```
+
+2. Redémarrez `npm run dev`
+
+Les APIs utiliseront les données de `src/api/mocks/` :
+- ✅ Auth (login/register)
+- ✅ Jeux (games)
+- ✅ Consoles
+- ✅ Favoris
+
+### Mode Réel (Avec Backend)
+
+Pour utiliser le backend, assurez-vous que :
+
+1. Le backend tourne sur `http://localhost:4000` (développement local)
+2. `.env.development` a `VITE_USE_MOCK=false`
+3. Ou utilisez le backend en ligne : `https://reactexpress-tnkm.onrender.com`
+
+## 📦 Proxy API (Vite)
+
+En développement, les requêtes `/api/**` sont automatiquement redirigées vers le backend grâce au proxy Vite configuré dans `vite.config.ts` :
+
+```typescript
+proxy: {
+  "/api": {
+    target: "http://localhost:4000/",
+    changeOrigin: true
+  }
+}
+```
+
+## 🏗️ Structure du Projet
+
+```
+src/
+├── api/
+│   ├── mocks/           # Données fictives
+│   ├── auth.api.ts
+│   ├── games.api.ts
+│   ├── consoles.api.ts
+│   ├── favorite.api.ts
+│   └── adminGames.api.ts
+├── components/          # Composants React
+├── pages/               # Pages de l'app
+├── auth/                # Gestion de l'authentification
+├── config/
+│   └── api.config.ts    # Configuration des mocks
+└── types/               # Types TypeScript
+```
+
+## ✨ Fonctionnalités
+
+- 🔐 **Authentification** : Login/Register avec JWT
+- 🎮 **Catalogue de Jeux** : Voir les jeux disponibles
+- ❤️ **Favoris** : Ajouter/Retirer des jeux en favoris
+- 👤 **Profil Utilisateur** : Voir les profils des autres utilisateurs
+- 📝 **Admin** : Gérer les jeux et consoles (pour l'admin)
+
+## 🌐 Déploiement (GitHub Pages)
+
+Le projet se déploie automatiquement sur GitHub Pages à chaque push sur `main`.
+
+**Workflow** : `.github/workflows/deploy.yml`
+
+### Configuration requise
+
+Activez GitHub Pages dans les paramètres du repo :
+- Settings → Pages
+- Source : Deploy from a branch
+- Branch : `gh-pages`
+
+L'app sera accessible à : `https://username.github.io/ReactExpress/`
+
+## 📝 Notes pour les Contributeurs
+
+- Les mocks sont dans `src/api/mocks/`
+- Pour ajouter un mock : éditez le fichier correspondant et activez `VITE_USE_MOCK=true`
+- Ne commitez pas `.env.development.local` (il est dans `.gitignore`)
+- Le backend en ligne est sur `https://reactexpress-tnkm.onrender.com`
+
+## 🔧 Scripts Disponibles
+
+```bash
+npm run dev      # Démarrer le serveur de développement
+npm run build    # Build pour la production
+npm run preview  # Prévisualiser le build
+npm run lint     # Vérifier les erreurs de lint
+```
+
+## 📄 Licence
+
+MIT
+
