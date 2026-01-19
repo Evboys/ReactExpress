@@ -131,9 +131,7 @@ npm install
 Créez un fichier `.env` à la racine du dossier `back/` :
 
 ```env
-PORT=4000
-MONGODB_URI=mongodb://localhost:27017/videogames
-NODE_ENV=development
+MONGODB_URI=mongodb+srv://DBUSER:PasswordDB@xxx.xxx.mongodb.net
 JWT_SECRET=your-secret-key-here
 ```
 
